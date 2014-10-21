@@ -29,3 +29,5 @@ Toast View Like Android For IOS
 1、Toast最多显示三行，多出三行不予显示
 
 2、对于超过kMessageCriticalLength（16）的message，toast显示的时间会比原来加长0.6s，方便用户阅读完毕
+
+3、已经适配IOS8
