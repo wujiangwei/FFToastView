@@ -21,9 +21,9 @@
 #define kFadeDuration               (0.3)
 #define kOpacity                    (0.8)
 
-#define kMessageCriticalLength      (12)
+#define kMessageCriticalLength      (16)
 #define kAnimationDelayNormal       (1.2)
-#define kAnimationDelayLong         (1.6)
+#define kAnimationDelayLong         (1.8)
 
 @implementation FFToastView
 
