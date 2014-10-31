@@ -3,6 +3,15 @@ FFToastView
 
 Toast View Like Android For IOS
 
+****** 可配置项 toast字体 一般toast展示时间  超长toast展示时间 ********
+
+//config toast font and show time(normal toast text and long toast text)
+
+//all the param can not be nil and bigger than zero
+
+//if nil or not bigger than zero,it will invalid
+
+    + (void)configFont:(UIFont *)toastFont normalTime:(CGFloat)normalTime longTime:(CGFloat)longTime
 
 ******提供4个方法*******
 

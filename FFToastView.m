@@ -8,7 +8,9 @@
 #import "FFToastView.h"
 #import <QuartzCore/QuartzCore.h>
 
-#define kToastFont [UIFont systemFontOfSize:15.0f]
+static UIFont *_toastFont = nil;
+static CGFloat _animationDelayNormal = 1.2;
+static CGFloat _animationDelayLong = 1.8;
 
 #define kHorizontalPadding          (20.0)
 #define kVerticalPadding            (10.0)
@@ -22,8 +24,7 @@
 #define kOpacity                    (0.8)
 
 #define kMessageCriticalLength      (16)
-#define kAnimationDelayNormal       (1.2)
-#define kAnimationDelayLong         (1.8)
+
 
 @implementation FFToastView
 
@@ -39,10 +40,18 @@ static FFToastView *_instance = nil;
         
         if (!_instance) {
             _instance = [[self alloc] init];
+            [FFToastView configFont:[UIFont systemFontOfSize:15.0f] normalTime:_animationDelayNormal longTime:_animationDelayLong];
         }
     }
     
     return _instance;
+}
+
++ (void)configFont:(UIFont *)toastFont normalTime:(CGFloat)normalTime longTime:(CGFloat)longTime
+{
+    if (toastFont != nil) _toastFont = toastFont;
+    if (normalTime > 0) _animationDelayNormal = normalTime;
+    if (longTime > 0)   _animationDelayLong = longTime;
 }
 
 +(id)allocWithZone:(NSZone *)zone
@@ -76,7 +85,7 @@ static FFToastView *_instance = nil;
         
         UILabel *label = [[UILabel alloc] init];
         [label setBackgroundColor:[UIColor clearColor]];
-        [label setFont:kToastFont];
+        [label setFont:_toastFont];
         [label setLineBreakMode:NSLineBreakByWordWrapping];
         [label setNumberOfLines:kMaxLines];
         [label setTextColor:[UIColor whiteColor]];
@@ -110,7 +119,7 @@ static FFToastView *_instance = nil;
         return;
     }
     
-    CGSize text_size = [message sizeWithFont:kToastFont constrainedToSize:CGSizeMake(kMaxWidth, kMaxHeight) lineBreakMode:_label.lineBreakMode];
+    CGSize text_size = [message sizeWithFont:_toastFont constrainedToSize:CGSizeMake(kMaxWidth, kMaxHeight) lineBreakMode:_label.lineBreakMode];
     [_label setText:message];
     [_label setFrame:CGRectMake(kHorizontalPadding, kVerticalPadding, text_size.width, text_size.height)];
     [self setFrame:CGRectMake(0.0f, 0.0f, text_size.width + kHorizontalPadding * 2, text_size.height + kVerticalPadding * 2)];
@@ -148,7 +157,7 @@ static FFToastView *_instance = nil;
     
     UIWindow *superView = [[UIApplication sharedApplication] keyWindow];
     
-    CGSize text_size = [message sizeWithFont:kToastFont constrainedToSize:CGSizeMake(kMaxWidth, kMaxHeight) lineBreakMode:_label.lineBreakMode];
+    CGSize text_size = [message sizeWithFont:_toastFont constrainedToSize:CGSizeMake(kMaxWidth, kMaxHeight) lineBreakMode:_label.lineBreakMode];
     [_label setText:message];
     [_label setFrame:CGRectMake(kHorizontalPadding, kVerticalPadding, text_size.width, text_size.height)];
     [self setFrame:CGRectMake(0.0f, 0.0f, text_size.width + kHorizontalPadding * 2, text_size.height + kVerticalPadding * 2)];
@@ -173,7 +182,7 @@ static FFToastView *_instance = nil;
     
     if([animationID isEqualToString:@"fade_in"]) {
         [UIView beginAnimations:@"fade_out" context:context];
-        [UIView setAnimationDelay:_label.text.length > kMessageCriticalLength ? kAnimationDelayLong : kAnimationDelayNormal];
+        [UIView setAnimationDelay:_label.text.length > kMessageCriticalLength ? _animationDelayLong : _animationDelayNormal];
         [UIView setAnimationDuration:kFadeDuration];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
