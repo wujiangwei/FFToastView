@@ -40,7 +40,11 @@ static FFToastView *_instance = nil;
         
         if (!_instance) {
             _instance = [[self alloc] init];
-            [FFToastView configFont:[UIFont systemFontOfSize:15.0f] normalTime:_animationDelayNormal longTime:_animationDelayLong];
+            CGFloat fontSize = 15.0f;
+            if ([UIScreen mainScreen].bounds.size.width > 320.f) {
+                fontSize = 16.0f;
+            }
+            [FFToastView configFont:[UIFont systemFontOfSize:fontSize] normalTime:_animationDelayNormal longTime:_animationDelayLong];
         }
     }
     
