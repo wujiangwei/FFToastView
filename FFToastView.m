@@ -18,7 +18,7 @@ static CGFloat _animationDelayLong = 1.8;
 
 #define kMaxLines                   (3)
 #define kMaxWidth                   ([UIScreen mainScreen].bounds.size.width * 0.75)
-#define kMaxHeight                  (kMaxWidth * 0.4)
+#define kMaxHeight                  (kMaxWidth * 0.5)
 
 #define kFadeDuration               (0.3)
 #define kOpacity                    (0.8)
@@ -39,12 +39,13 @@ static FFToastView *_instance = nil;
     {
         
         if (!_instance) {
-            _instance = [[self alloc] init];
             CGFloat fontSize = 15.0f;
             if ([UIScreen mainScreen].bounds.size.width > 320.f) {
                 fontSize = 16.0f;
             }
             [FFToastView configFont:[UIFont systemFontOfSize:fontSize] normalTime:_animationDelayNormal longTime:_animationDelayLong];
+            
+            _instance = [[self alloc] init];
         }
     }
     
