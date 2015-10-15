@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 spec.name         = 'FFToastView'
 spec.license      = { :type => 'MIT' }
-spec.platform     = :ios, '6.0'
+spec.platform     = :ios, '8.0'
 spec.homepage     = 'https://github.com/wujiangwei/FFToastView'
 spec.authors      = 'Kevin.Wu'
 spec.summary      = 'toast like android'
